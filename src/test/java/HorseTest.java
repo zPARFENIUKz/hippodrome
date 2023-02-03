@@ -1,7 +1,13 @@
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.stream.Stream;
 
@@ -75,8 +81,56 @@ class HorseTest {
             }
         }
     }
-
+    @ExtendWith(MockitoExtension.class)
     public static class MethodsTest {
+        private static final String HORSE_NAME = "Horse";
+        private static final int HORSE_SPEED = 5;
+        private static final int HORSE_DISTANCE = 6;
+        private static Horse twoArgumentsHorse = Mockito.spy(new Horse(HORSE_NAME, HORSE_SPEED));
+        private static Horse threeArgumentsHorse = Mockito.spy(new Horse(HORSE_NAME, HORSE_SPEED, HORSE_DISTANCE));
+
+        @BeforeEach
+        void reInitHorses() {
+            twoArgumentsHorse = Mockito.spy(new Horse(HORSE_NAME, HORSE_SPEED));
+            threeArgumentsHorse = Mockito.spy(new Horse(HORSE_NAME, HORSE_SPEED, HORSE_DISTANCE));
+        }
+
+        @Test
+        void getNameTest() {
+            Assertions.assertEquals(HORSE_NAME, twoArgumentsHorse.getName());
+            Assertions.assertEquals(HORSE_NAME, threeArgumentsHorse.getName());
+        }
+
+        @Test
+        void getSpeedTest() {
+            Assertions.assertEquals(HORSE_SPEED, twoArgumentsHorse.getSpeed());
+            Assertions.assertEquals(HORSE_SPEED, threeArgumentsHorse.getSpeed());
+        }
+
+        @Test
+        void getDistanceTest() {
+            Assertions.assertEquals(HORSE_DISTANCE, threeArgumentsHorse.getDistance());
+            Assertions.assertEquals(0, twoArgumentsHorse.getDistance());
+        }
+
+        @Test
+        void moveTest() {
+            try (MockedStatic<Horse> horseMockedStatic = Mockito.mockStatic(Horse.class)) {
+                twoArgumentsHorse.move();
+                horseMockedStatic.verify(() -> Horse.getRandomDouble(0.2, 0.9));
+            }
+        }
+
+        @ParameterizedTest
+        @ValueSource(doubles = {0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9})
+        void distanceFormulaTest(double getRandomDoubleResult) {
+            try (MockedStatic<Horse> horseMockedStatic = Mockito.mockStatic(Horse.class)) {
+                horseMockedStatic.when(() -> Horse.getRandomDouble(0.2, 0.9)).thenReturn(getRandomDoubleResult);
+                final double expectedDistance = twoArgumentsHorse.getDistance() + twoArgumentsHorse.getSpeed() * getRandomDoubleResult;
+                twoArgumentsHorse.move();
+                Assertions.assertEquals(expectedDistance, twoArgumentsHorse.getDistance());
+            }
+        }
 
     }
 }
