@@ -22,11 +22,9 @@
     </Appenders>
     <Loggers>
         <!-- avoid duplicated logs with additivity=false -->
-        <Logger name="com" level="debug" additivity="false">
-            <AppenderRef ref="LogToRollingFile"/>
-        </Logger>
         <Root level="debug">
             <AppenderRef ref="LogToConsole"/>
+            <AppenderRef ref="LogToRollingFile"/>
         </Root>
     </Loggers>
 </Configuration>

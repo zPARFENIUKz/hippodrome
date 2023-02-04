@@ -28,6 +28,7 @@ class HorseTest {
         void nullConstructorMessageTest() {
             try {
                 new Horse(null, 1);
+                Assertions.fail();
             } catch (Exception e) {
                 Assertions.assertEquals(CONSTRUCTOR_NULL_INIT_EXCEPTION_MESSAGE, e.getMessage());
             }
@@ -44,6 +45,7 @@ class HorseTest {
         void whiteSpaceCharactersNameExceptionMessageTest(String name) {
             try {
                 new Horse(name, 1);
+                Assertions.fail();
             } catch (Exception e) {
                 Assertions.assertEquals(CONSTRUCTOR_WHITESPACE_CHARACTERS_NAME_EXCEPTION_MESSAGE, e.getMessage());
             }
@@ -62,6 +64,7 @@ class HorseTest {
         void negativeSpeedConstructorExceptionMessageTest() {
             try {
                 new Horse("horse", -1);
+                Assertions.fail();
             } catch (Exception e) {
                 Assertions.assertEquals(CONSTRUCTOR_NEGATIVE_SPEED_EXCEPTION_MESSAGE, e.getMessage());
             }
@@ -76,6 +79,7 @@ class HorseTest {
         void negativeDistanceConstructorExceptionMessageTest() {
             try {
                 new Horse("horse", 1, -1);
+                Assertions.fail();
             } catch (Exception e) {
                 Assertions.assertEquals(CONSTRUCTOR_NEGATIVE_DISTANCE_EXCEPTION_MESSAGE, e.getMessage());
             }

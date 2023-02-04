@@ -4,7 +4,7 @@ import org.slf4j.LoggerFactory;
 import static java.util.Objects.isNull;
 
 public class Horse {
-    private static final Logger logger = LoggerFactory.getLogger(Horse.class);
+    protected static final Logger logger = LoggerFactory.getLogger(Horse.class);
     private final String name;
     private final double speed;
     private double distance;

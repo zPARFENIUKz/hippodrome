@@ -25,6 +25,7 @@ class HippodromeTest {
         void nullArgErrorMessageConstructorTest() {
             try {
                 new Hippodrome(null);
+                Assertions.fail();
             } catch (Exception e) {
                 Assertions.assertEquals(NULL_ARG_CONSTRUCTOR_ERROR_MESSAGE, e.getMessage());
             }
@@ -39,6 +40,7 @@ class HippodromeTest {
         void emptyListErrorMessageConstructorTest() {
             try {
                 new Hippodrome(Collections.emptyList());
+                Assertions.fail();
             } catch (Exception e) {
                 assertEquals(EMPTY_LIST_EXCEPTION_CONSTRUCTOR_MESSAGE, e.getMessage());
             }

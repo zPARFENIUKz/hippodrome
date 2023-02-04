@@ -5,10 +5,9 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class Main {
-    private static final Logger logger = LoggerFactory.getLogger(Main.class);
+    protected static final Logger logger = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) throws Exception {
-        logger.error("dsfghjkhgfdsfghnmj");
         List<Horse> horses = List.of(
                 new Horse("Буцефал", 2.4),
                 new Horse("Туз Пик", 2.5),
@@ -31,7 +30,7 @@ public class Main {
         System.out.println("Победил " + winnerName + "!");
     }
 
-    private static void watch(Hippodrome hippodrome) throws Exception {
+    private static void watch(Hippodrome hippodrome) {
         hippodrome.getHorses().stream()
                 .map(horse -> ".".repeat((int) horse.getDistance()) + horse.getName())
                 .forEach(System.out::println);
